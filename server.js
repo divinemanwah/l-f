@@ -18,6 +18,7 @@ botService.on('contactAdded', (bot, data) => {
 
 botService.on('personalMessage', (bot, data) => {
     bot.reply('Hey ${data.from}. Thank you for your message: "${data.content}".', true);
+	console.log(data)
 });
 
 const server = restify.createServer();
