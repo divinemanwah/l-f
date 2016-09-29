@@ -4,7 +4,7 @@ const skype = require('skype-sdk');
 
 const botService = new skype.BotService({
     messaging: {
-        botId: 'lyrics-finder',
+        botId: 'l-f',
         serverUrl : "https://apis.skype.com",
         requestTimeout : 15000,
         appId: process.env.APP_ID,
@@ -13,7 +13,7 @@ const botService = new skype.BotService({
 });
 
 botService.on('contactAdded', (bot, data) => {
-    bot.reply(`Hello ${data.fromDisplayName}!`, true);
+    bot.reply('Hello ${data.fromDisplayName}!', true);
 });
 
 botService.on('personalMessage', (bot, data) => {
