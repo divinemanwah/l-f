@@ -17,10 +17,9 @@ botService.on('contactAdded', (bot, data) => {
 });
 
 botService.on('personalMessage', (bot, data) => {
-	console.log(data)
     bot.reply('Hey ${data.from}. Thank you for your message: "${data.content}".', true);
 });
-console.log(botService)
+
 const server = restify.createServer();
 // server.use(skype.ensureHttps(true));
 // server.use(skype.verifySkypeCert());
