@@ -21,8 +21,8 @@ botService.on('personalMessage', (bot, data) => {
 });
 
 const server = restify.createServer();
-server.use(skype.ensureHttps(true));
-server.use(skype.verifySkypeCert());
+// server.use(skype.ensureHttps(true));
+// server.use(skype.verifySkypeCert());
 server.post('/v1/chat', skype.messagingHandler(botService));
 const port = process.env.PORT || 8080;
 server.listen(port);
