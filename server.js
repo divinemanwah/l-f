@@ -5,7 +5,7 @@ const skype = require('skype-sdk');
 const botService = new skype.BotService({
     messaging: {
         botId: 'l-f',
-        // serverUrl : "https://apis.skype.com",
+        serverUrl : "https://apis.skype.com",
         requestTimeout : 15000,
         appId: process.env.APP_ID,
         appSecret: process.env.APP_SECRET
