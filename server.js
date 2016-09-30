@@ -11,7 +11,8 @@ const botService = new skype.BotService({
         appSecret: process.env.APP_SECRET
     }
 });
-
+console.log('APP_ID', process.env.APP_ID);
+console.log('APP_SECRET', process.env.APP_SECRET);
 botService.on('contactAdded', (bot, data) => {
     bot.reply('Hello ${data.fromDisplayName}!', true);
 });
