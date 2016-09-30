@@ -9,10 +9,11 @@
   "author": "Ron Oliver Santor",
   "license": "ISC",
   "dependencies": {
+    "botbuilder": "^3.2.3",
     "restify": "^4.1.1",
     "skype-sdk": "file:skype-sdk.tar.gz"
   },
   "engines": {
-	"node": ">=5.6.0"
+    "node": ">=5.6.0"
   }
 }
