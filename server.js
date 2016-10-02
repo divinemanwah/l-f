@@ -163,17 +163,17 @@ bot.on('conversationUpdate', function (message) {
             });
         }
 		
-		lunch_interval = setInterval(function () {
+		// lunch_interval = setInterval(function () {
 		
-			clearInterval(lunch_interval);
+			// clearInterval(lunch_interval);
 		
-			var reply = new builder.Message()
-                            .address(message.address)
-                            .text(lunch[Math.floor(Math.random() * lunch.length)]);
+			// var reply = new builder.Message()
+                            // .address(message.address)
+                            // .text(lunch[Math.floor(Math.random() * lunch.length)]);
 			
-			bot.send(reply);
+			// bot.send(reply);
 			
-		}, 5000);
+		// }, 5000);
     }
 });
 
