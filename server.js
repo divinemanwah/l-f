@@ -174,6 +174,16 @@ bot.on('conversationUpdate', function (message) {
 			// bot.send(reply);
 			
 		// }, 5000);
+		
+		var s = schedule.scheduleJob({hour: 12, minute: 50}, function(){
+					
+					var reply = new builder.Message()
+									.address(message.address)
+									.text(lunch[Math.floor(Math.random() * lunch.length)]);
+					
+					bot.send(reply);
+					
+				});
     }
 });
 
