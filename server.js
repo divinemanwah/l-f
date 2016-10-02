@@ -52,9 +52,9 @@ server.post('/api/messages', connector.listen());
 var intents = new builder.IntentDialog();
 bot.dialog('/', intents);
 
-intents.matches(/^test/i, function () {
+intents.matches(/^test/i, function (session) {
 	
-	console.log(arguments)
+	session.send(JSON.stringify(arguments));
 
 });
 
