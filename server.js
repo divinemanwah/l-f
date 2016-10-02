@@ -52,7 +52,13 @@ server.post('/api/messages', connector.listen());
 bot.dialog('/', new builder.IntentDialog()
     // .matches(/^add/i, '/addTask')
     // .matches(/^change/i, '/changeTask')
-    // .matches(/^delete/i, '/deleteTask')
+    .matches(/^delete/i, [
+		function () {
+				
+				bot.send(JSON.stringify(arguments));
+				
+			}
+	])
     .onDefault(builder.DialogAction.send("I'm sorry. I didn't understand."))
 );
 
