@@ -49,14 +49,12 @@ var connector = new builder.ChatConnector({
 var bot = new builder.UniversalBot(connector);
 server.post('/api/messages', connector.listen());
 
-var intents = new builder.IntentDialog();
-bot.dialog('/', intents);
-
-intents.matches(/^test/i, function (session) {
-	
-	session.send(JSON.stringify(arguments));
-
-});
+bot.dialog('/', new builder.IntentDialog()
+    // .matches(/^add/i, '/addTask')
+    // .matches(/^change/i, '/changeTask')
+    // .matches(/^delete/i, '/deleteTask')
+    .onDefault(builder.DialogAction.send("I'm sorry. I didn't understand."))
+);
 
 
 //=========================================================
