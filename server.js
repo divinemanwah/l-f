@@ -28,8 +28,49 @@ send Receipts, and use Carousels.
 
 -----------------------------------------------------------------------------*/
 
+function toTitleCase(str)
+{
+    return str.replace(/\w\S*/g, function(txt){return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();});
+}
+
+function xmlToJson(url, callback) {
+  var req = http.get(url, function(res) {
+    var xml = '';
+
+    res.on('data', function(chunk) {
+      xml += chunk;
+    });
+
+    res.on('error', function(e) {
+      callback(e, null);
+    }); 
+
+    res.on('timeout', function(e) {
+      callback(e, null);
+    }); 
+
+    res.on('end', function() {
+      parseString(xml, function(err, result) {
+        callback(null, result);
+      });
+    });
+  });
+  
+  req.on('socket', function (socket) {
+	
+	socket.setTimeout(5000, function () {
+		
+		req.abort();
+		
+	});
+	
+  });
+}
+
 var restify = require('restify');
 var builder = require('botbuilder');
+var http = require('http');
+var parseString = require('xml2js').parseString;
 
 //=========================================================
 // Bot Setup
@@ -49,22 +90,51 @@ var connector = new builder.ChatConnector({
 var bot = new builder.UniversalBot(connector);
 server.post('/api/messages', connector.listen());
 
+var msgs = [
+		'Bobo mo',
+		'Mali ka nanaman',
+		'Anu ba yan',
+		'Hay nako',
+		'Putek naman'
+	];
+	
+var lunch = [
+		'Lapit na mag lunch mga beki!',
+		'Gogora na tayo sa lunching!',
+		'10 minutes nalang mga beshties, kaya pa yan!'
+	];
+
 bot.dialog('/', new builder.IntentDialog()
     // .matches(/^add/i, '/addTask')
     // .matches(/^change/i, '/changeTask')
-    .matches(/delete$/i, function () {
+    .matches(/ririks (.*) ~ (.*)/i, function (session, matches) {
 				
-			bot.send(JSON.stringify(arguments));
+			var artist = toTitleCase(matches.matched[1].trim()),
+				title = toTitleCase(matches.matched[2].trim());
 			
+			xmlToJson('http://api.lololyrics.com/0.5/getLyric?artist=' + encodeURIComponent(artist) + '&track=' + encodeURIComponent(title), function (err, data) {
+				
+				if(err)
+					session.send('Teka, mejo error. Wait ka lang bes ' + session.message.user.name + '.');
+				else
+					session.send(title + ' ~ ' + artist + '\n---\n' + data.result.response);
+				
+			});
 		}
 	)
-    .onDefault(builder.DialogAction.send("I'm sorry. I didn't understand."))
+    .onDefault(function (session) {
+				
+			session.send(msgs[Math.floor(Math.random() * msgs.length)] + ' ' + session.message.user.name + '! Ganito dapat: ' + (session.message.address.conversation.isGroup ? '@' + session.message.address.bot.name : '') + ' find &lt;title&gt; ~ &lt;artist&gt;');
+			
+		})
 );
 
 
 //=========================================================
 // Activity Events
 //=========================================================
+
+var lunch_interval = null;
 
 bot.on('conversationUpdate', function (message) {
    // Check for group conversations
@@ -92,6 +162,18 @@ bot.on('conversationUpdate', function (message) {
                 }
             });
         }
+		
+		lunch_interval = setInterval(function () {
+		
+			clearInterval(lunch_interval);
+		
+			var reply = new builder.Message()
+                            .address(message.address)
+                            .text(lunch[Math.floor(Math.random() * lunch.length)]);
+			
+			bot.send(reply);
+			
+		}, 5000);
     }
 });
 
