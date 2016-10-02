@@ -38,8 +38,7 @@ var builder = require('botbuilder');
 // Setup Restify Server
 var server = restify.createServer();
 server.listen(process.env.port || process.env.PORT || 3978, function () {
-   console.log('%s listening to %s', server.name, server.url); 
-   console.log('port', process.env.port || process.env.PORT || 3978)
+   console.log('%s listening to %s', server.name, server.url);
 });
   
 // Create chat bot
@@ -49,6 +48,15 @@ var connector = new builder.ChatConnector({
 });
 var bot = new builder.UniversalBot(connector);
 server.post('/api/messages', connector.listen());
+
+var intents = new builder.IntentDialog();
+bot.dialog('/', intents);
+
+intents.matches(/^test/i, function () {
+	
+	console.log(arguments)
+
+});
 
 
 //=========================================================
@@ -89,7 +97,7 @@ bot.on('contactRelationUpdate', function (message) {
         var name = message.user ? message.user.name : null;
         var reply = new builder.Message()
                 .address(message.address)
-                .text("Hello %s... Thanks for adding me. Say 'hello' to see some great demos.", name || 'there');
+                .text("Hello %s... Thanks for adding me.", name || 'there');
         bot.send(reply);
     } else {
         // delete their data
@@ -106,19 +114,19 @@ bot.on('deleteUserData', function (message) {
 //=========================================================
 
 // Anytime the major version is incremented any existing conversations will be restarted.
-bot.use(builder.Middleware.dialogVersion({ version: 1.0, resetCommand: /^reset/i }));
+// bot.use(builder.Middleware.dialogVersion({ version: 1.0, resetCommand: /^reset/i }));
 
 //=========================================================
 // Bots Global Actions
 //=========================================================
 
-bot.endConversationAction('goodbye', 'Goodbye :)', { matches: /^goodbye/i });
-bot.beginDialogAction('help', '/help', { matches: /^help/i });
+// bot.endConversationAction('goodbye', 'Goodbye :)', { matches: /^goodbye/i });
+// bot.beginDialogAction('help', '/help', { matches: /^help/i });
 
 //=========================================================
 // Bots Dialogs
 //=========================================================
-
+/*
 bot.dialog('/', [
     function (session) {
         // Send a greeting and show help.
@@ -437,3 +445,4 @@ bot.dialog('/weather', [
     }
 ]);
 bot.beginDialogAction('weather', '/weather');   // <-- no 'matches' option means this can only be triggered by a button.
+*/
