@@ -118,14 +118,14 @@ bot.dialog('/', new builder.IntentDialog()
 				if(err)
 					session.send('Teka, mejo error. Wait ka lang bes ' + session.message.user.name + '.');
 				else
-					session.send(title + ' ~ ' + artist + '\n---\n' + data.result.response);
+					session.send(artist + ' ~ ' + title + '\n---\n' + data.result.response);
 				
 			});
 		}
 	)
     .onDefault(function (session) {
 				
-			session.send(msgs[Math.floor(Math.random() * msgs.length)] + ' ' + session.message.user.name + '! Ganito dapat: ' + (session.message.address.conversation.isGroup ? '@' + session.message.address.bot.name : '') + ' ririks &lt;title&gt; ~ &lt;artist&gt;');
+			session.send(msgs[Math.floor(Math.random() * msgs.length)] + ' ' + session.message.user.name + '! Ganito dapat: ' + (session.message.address.conversation.isGroup ? '@' + session.message.address.bot.name : '') + ' ririks &lt;artist&gt; ~ &lt;title&gt;');
 			
 		})
 );
