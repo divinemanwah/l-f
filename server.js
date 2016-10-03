@@ -96,7 +96,8 @@ var msgs = [
 		'Mali ka nanaman',
 		'Anu ba yan',
 		'Hay nako',
-		'Putek naman'
+		'Putek naman',
+		'Kaimbyerna ka'
 	];
 	
 var lunch = [
@@ -161,6 +162,12 @@ bot.on('conversationUpdate', function (message) {
                         .text("Goodbye");
                     bot.send(reply);
                 }
+				else {
+                    var reply = new builder.Message()
+                        .address(message.address)
+                        .text("Aww. Babay, " + identity.name + '! Tara guys party party!');
+                    bot.send(reply);
+                }
             });
         }
 		
@@ -193,7 +200,7 @@ bot.on('contactRelationUpdate', function (message) {
         var name = message.user ? message.user.name : null;
         var reply = new builder.Message()
                 .address(message.address)
-                .text("Hello %s... Thanks for adding me.", name || 'there');
+                .text("Hello %s... Thanks for adding me. Mwaah mwaah tsup tsup!", name || 'there');
         bot.send(reply);
     } else {
         // delete their data
