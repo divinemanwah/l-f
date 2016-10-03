@@ -154,7 +154,7 @@ bot.on('conversationUpdate', function (message) {
         }
 
         // Send a goodbye message when bot is removed
-        if (message.membersRemoved) {
+        if (message.membersRemoved) {console.log(message.membersRemoved)
             message.membersRemoved.forEach(function (identity) {
                 if (identity.id === message.address.bot.id) {
                     var reply = new builder.Message()
@@ -165,7 +165,7 @@ bot.on('conversationUpdate', function (message) {
 				else {
                     var reply = new builder.Message()
                         .address(message.address)
-                        .text("Aww. Babay, " + identity.name + '! Tara guys party party!');
+                        .text("Aww. Babay " + identity.name + '! Tara guys party party!');
                     bot.send(reply);
                 }
             });
