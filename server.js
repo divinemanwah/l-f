@@ -71,6 +71,7 @@ var restify = require('restify');
 var builder = require('botbuilder');
 var http = require('http');
 var parseString = require('xml2js').parseString;
+var schedule = require('node-schedule');
 
 //=========================================================
 // Bot Setup
