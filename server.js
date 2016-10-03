@@ -164,7 +164,7 @@ bot.on('conversationUpdate', function (message) {
         }
 
         // Send a goodbye message when bot is removed
-        if (message.membersRemoved) {console.log(message.membersRemoved)
+        if (message.membersRemoved) {console.log(message)
             message.membersRemoved.forEach(function (identity) {
                 if (identity.id === message.address.bot.id) {
                     var reply = new builder.Message()
