@@ -119,7 +119,7 @@ bot.dialog('/', new builder.IntentDialog()
 				if(err)
 					session.send('Teka, mejo error. Wait ka lang bes ' + session.message.user.name + '.');
 				else
-					session.send(artist + ' ~ ' + title + '\n---\n' + data.result.response + '\n' + 'http://api.lololyrics.com/0.5/getLyric?artist=' + encodeURIComponent(artist) + '&track=' + encodeURIComponent(title));
+					session.send(artist + ' ~ ' + title + '\n---\n' + data.result.response);
 				
 			});
 		}
