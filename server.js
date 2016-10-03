@@ -149,6 +149,16 @@ bot.on('conversationUpdate', function (message) {
                             .address(message.address)
                             .text("Hello everyone!");
                     bot.send(reply);
+					
+					var s = schedule.scheduleJob({hour: 12, minute: 50}, function(){
+					
+							var reply = new builder.Message()
+											.address(message.address)
+											.text(lunch[Math.floor(Math.random() * lunch.length)]);
+							
+							bot.send(reply);
+							
+						});
                 }
             });
         }
@@ -170,28 +180,6 @@ bot.on('conversationUpdate', function (message) {
                 }
             });
         }
-		
-		// lunch_interval = setInterval(function () {
-		
-			// clearInterval(lunch_interval);
-		
-			// var reply = new builder.Message()
-                            // .address(message.address)
-                            // .text(lunch[Math.floor(Math.random() * lunch.length)]);
-			
-			// bot.send(reply);
-			
-		// }, 5000);
-		
-		var s = schedule.scheduleJob({hour: 12, minute: 50}, function(){
-					
-					var reply = new builder.Message()
-									.address(message.address)
-									.text(lunch[Math.floor(Math.random() * lunch.length)]);
-					
-					bot.send(reply);
-					
-				});
     }
 });
 
