@@ -72,6 +72,8 @@ var builder = require('botbuilder');
 var http = require('http');
 var parseString = require('xml2js').parseString;
 var schedule = require('node-schedule');
+var request = require('request');
+var $ = require('cheerio');
 
 //=========================================================
 // Bot Setup
@@ -99,6 +101,12 @@ var msgs = [
 		'Putek naman',
 		'Kaimbyerna ka'
 	];
+
+var errs = [
+		'Sorry waley',
+		'404 no brain, este not found',
+		'Wala bes'
+	];
 	
 var lunch = [
 		'Lapit na mag lunch mga beki!',
@@ -114,14 +122,26 @@ bot.dialog('/', new builder.IntentDialog()
 			var artist = toTitleCase(matches.matched[1].trim()),
 				title = toTitleCase(matches.matched[2].trim());
 			
-			xmlToJson('http://api.lololyrics.com/0.5/getLyric?artist=' + encodeURIComponent(artist) + '&track=' + encodeURIComponent(title), function (err, data) {
-				
-				if(err)
-					session.send('Teka, mejo error. Wait ka lang bes ' + session.message.user.name + '.');
+			request('http://www.lyricsmode.com/lyrics/m/mayonnaise/bakit_part_2.html', function (error, response, body) {
+				if (!error && response.statusCode == 200) {
+					
+					var body = $.load(body),
+						lyrics = body.find('#lyrics_text').text();
+					
+					session.send(artist + ' ~ ' + title + '\n---\n' + lyrics);
+				}
 				else
-					session.send(artist + ' ~ ' + title + '\n---\n' + data.result.response + '\n' + (new Date()).toString());
+					session.send(errs[Math.floor(Math.random() * errs.length)] + ' ' + session.message.user.name + '.');
+			})
+			
+			// xmlToJson('http://api.lololyrics.com/0.5/getLyric?artist=' + encodeURIComponent(artist) + '&track=' + encodeURIComponent(title), function (err, data) {
 				
-			});
+				// if(err)
+					// session.send('Teka, mejo error. Wait ka lang bes ' + session.message.user.name + '.');
+				// else
+					// session.send(artist + ' ~ ' + title + '\n---\n' + data.result.response + '\n' + (new Date()).toString());
+				
+			// });
 		}
 	)
     .onDefault(function (session) {
