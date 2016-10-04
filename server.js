@@ -216,6 +216,7 @@ bot.dialog('/', new builder.IntentDialog()
     .onDefault(function (session) {
 				
 			session.send(msgs[Math.floor(Math.random() * msgs.length)] + ' ' + session.message.user.name + '! Ganito dapat: ' + (session.message.address.conversation.isGroup ? '@' + session.message.address.bot.name : '') + ' ririks *artist* ~ *title*');
+			session.send('Pwede rin ganito: rarawan *kahit ano*');
 			
 		})
 );
