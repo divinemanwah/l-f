@@ -172,7 +172,7 @@ bot.dialog('/', new builder.IntentDialog()
 					var msg = new builder.Message(session)
 											.textFormat(builder.TextFormat.xml)
 											.attachmentLayout(builder.AttachmentLayout.carousel)
-											.attachments(res.value.map(function () {
+											.attachments(res.value.map(function (x) {
 												
 												return new builder.HeroCard(session)
 																	.text(x.name)
