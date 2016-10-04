@@ -144,16 +144,28 @@ bot.dialog('/', new builder.IntentDialog()
 			
 				var res = JSON.parse(body);
 				
+				// var msg = new builder.Message(session)
+										// .textFormat(builder.TextFormat.xml)
+										// .attachments([
+											// new builder.ThumbnailCard(session)
+												// .title("Mga Rarawan")
+												// .subtitle(matches.matched[1].trim())
+												// .text(imgs[Math.floor(Math.random() * imgs.length)])
+												// .images(res.value.map(function (x) { return builder.CardImage.create(session, x.thumbnailUrl); }))
+												// .tap(builder.CardAction.openUrl(session, res.webSearchUrl))
+										// ]);
+										
 				var msg = new builder.Message(session)
 										.textFormat(builder.TextFormat.xml)
-										.attachments([
-											new builder.ThumbnailCard(session)
-												.title("Mga Rarawan")
-												.subtitle(matches.matched[1].trim())
-												.text(imgs[Math.floor(Math.random() * imgs.length)])
-												.images(res.value.map(function (x) { return builder.CardImage.create(session, x.thumbnailUrl); }))
-												.tap(builder.CardAction.openUrl(session, res.webSearchUrl))
-										]);
+										.attachments(res.value.map(funcrtion (x) {
+											
+											return new builder.HeroCard(session)
+																.text(x.name)
+																.images([
+																	builder.CardImage.create(session, x.thumbnailUrl)
+																]);
+											
+										}));
 				
 				session.send(msg);
 			}
