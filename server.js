@@ -128,7 +128,7 @@ bot.dialog('/', new builder.IntentDialog()
 				if (!error && response.statusCode == 200) {
 					
 					var $ = cheerio.load(body),
-						lyrics = $('#lyrics_text').html().replace(/<br\s*[\/]?>/gi, "\n");
+						lyrics = $('<p>' + $('#lyrics_text').html().replace(/<br\s*[\/]?>/gi, "\n") + '</p>').text();
 					
 					session.send(artist + ' ~ ' + title + '\n---\n' + lyrics);
 				}
