@@ -73,7 +73,7 @@ var http = require('http');
 var parseString = require('xml2js').parseString;
 var schedule = require('node-schedule');
 var request = require('request');
-var $ = require('cheerio');
+var cheerio = require('cheerio');
 
 //=========================================================
 // Bot Setup
@@ -125,8 +125,8 @@ bot.dialog('/', new builder.IntentDialog()
 			request('http://www.lyricsmode.com/lyrics/m/mayonnaise/bakit_part_2.html', function (error, response, body) {
 				if (!error && response.statusCode == 200) {
 					
-					var body = $.load(body),
-						lyrics = body.find('#lyrics_text').text();
+					var $ = cheerio.load(body),
+						lyrics = $('#lyrics_text').text();
 					
 					session.send(artist + ' ~ ' + title + '\n---\n' + lyrics);
 				}
