@@ -119,7 +119,9 @@ var suffix = [
 var clicks = [
 		'Click mo dali',
 		'Eto din bes',
-		'Last na promise'
+		'Last na promise',
+		'Wow!',
+		'1 click = 1 prayer'
 	];
 	
 var lunch = [
