@@ -178,7 +178,7 @@ bot.dialog('/', new builder.IntentDialog()
 																	.text(x.name)
 																	.images([
 																		builder.CardImage.create(session, x.thumbnailUrl)
-																			.tap(builder.CardAction.showImage(session, x.thumbnailUrl)),
+																			.tap(builder.CardAction.showImage(session, x.contentUrl)),
 																	])
 																	.buttons([
 																		builder.CardAction.openUrl(session, x.contentUrl, clicks[i])
