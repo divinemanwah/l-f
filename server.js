@@ -116,6 +116,12 @@ var suffix = [
 		'the Beki Monkey'
 	];
 	
+var imgs = [
+		'Masaya ka na?',
+		'Yan na bekibells',
+		'At your extra sevice'
+	];
+	
 var lunch = [
 		'Lapit na mag lunch mga beki!',
 		'Gogora na tayo sa lunching!',
@@ -138,10 +144,21 @@ bot.dialog('/', new builder.IntentDialog()
 			
 				var res = JSON.parse(body);
 				
-				console.log(res)
+				var msg = new builder.Message(session)
+										.textFormat(builder.TextFormat.xml)
+										.attachments([
+											new builder.ThumbnailCard(session)
+												.title("Mga Rarawan")
+												.subtitle(matches.matched[1].trim())
+												.text(imgs[Math.floor(Math.random() * imgs.length)])
+												.images(res.value.map(function (x) { return builder.CardImage.create(session, x.thumbnailUrl); }))
+												.tap(builder.CardAction.openUrl(session, res.webSearchUrl))
+										]);
+				
+				session.send(msg);
 			}
 			else
-				console.log(body)
+				session.send(errs[Math.floor(Math.random() * errs.length)] + ' ' + session.message.user.name + (Math.floor(Math.random() * 2) ? ' ' + suffix[Math.floor(Math.random() * suffix.length)] : '') + '.');
 		});
 		
 	})
