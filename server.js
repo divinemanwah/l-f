@@ -157,14 +157,28 @@ bot.dialog('/', new builder.IntentDialog()
 
 				if(res.value.length) {
 				
+					// var msg = new builder.Message(session)
+											// .textFormat(builder.TextFormat.xml)
+											// .attachments(res.value.map(function (x) {
+												
+												// return new builder.HeroCard(session)
+																	// .text(x.name)
+																	// .images([
+																		// builder.CardImage.create(session, x.thumbnailUrl)
+																	// ]);
+												
+											// }));
+											
 					var msg = new builder.Message(session)
 											.textFormat(builder.TextFormat.xml)
-											.attachments(res.value.map(function (x) {
+											.attachmentLayout(builder.AttachmentLayout.carousel)
+											.attachments(res.value.map(function () {
 												
 												return new builder.HeroCard(session)
 																	.text(x.name)
 																	.images([
 																		builder.CardImage.create(session, x.thumbnailUrl)
+																			.tap(builder.CardAction.showImage(session, x.thumbnailUrl)),
 																	]);
 												
 											}));
