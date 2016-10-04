@@ -154,20 +154,25 @@ bot.dialog('/', new builder.IntentDialog()
 												// .images(res.value.map(function (x) { return builder.CardImage.create(session, x.thumbnailUrl); }))
 												// .tap(builder.CardAction.openUrl(session, res.webSearchUrl))
 										// ]);
-										
-				var msg = new builder.Message(session)
-										.textFormat(builder.TextFormat.xml)
-										.attachments(res.value.map(funcrtion (x) {
-											
-											return new builder.HeroCard(session)
-																.text(x.name)
-																.images([
-																	builder.CardImage.create(session, x.thumbnailUrl)
-																]);
-											
-										}));
+
+				if(res.value.length) {
 				
-				session.send(msg);
+					var msg = new builder.Message(session)
+											.textFormat(builder.TextFormat.xml)
+											.attachments(res.value.map(function (x) {
+												
+												return new builder.HeroCard(session)
+																	.text(x.name)
+																	.images([
+																		builder.CardImage.create(session, x.thumbnailUrl)
+																	]);
+												
+											}));
+					
+					session.send(msg);
+				}
+				else
+					session.send(errs[Math.floor(Math.random() * errs.length)] + ' ' + session.message.user.name + (Math.floor(Math.random() * 2) ? ' ' + suffix[Math.floor(Math.random() * suffix.length)] : '') + '.');
 			}
 			else
 				session.send(errs[Math.floor(Math.random() * errs.length)] + ' ' + session.message.user.name + (Math.floor(Math.random() * 2) ? ' ' + suffix[Math.floor(Math.random() * suffix.length)] : '') + '.');
