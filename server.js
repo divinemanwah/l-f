@@ -116,10 +116,10 @@ var suffix = [
 		'the Beki Monkey'
 	];
 	
-var imgs = [
-		'Masaya ka na?',
-		'Yan na bekibells',
-		'At your extra sevice'
+var clicks = [
+		'Click mo dali',
+		'Eto din bes',
+		'Last na promise'
 	];
 	
 var lunch = [
@@ -172,13 +172,16 @@ bot.dialog('/', new builder.IntentDialog()
 					var msg = new builder.Message(session)
 											.textFormat(builder.TextFormat.xml)
 											.attachmentLayout(builder.AttachmentLayout.carousel)
-											.attachments(res.value.map(function (x) {
+											.attachments(res.value.map(function (x, i) {
 												
 												return new builder.HeroCard(session)
 																	.text(x.name)
 																	.images([
 																		builder.CardImage.create(session, x.thumbnailUrl)
 																			.tap(builder.CardAction.showImage(session, x.thumbnailUrl)),
+																	])
+																	.buttons([
+																		builder.CardAction.openUrl(session, x.contentUrl, clicks[i])
 																	]);
 												
 											}));
@@ -216,7 +219,7 @@ bot.dialog('/', new builder.IntentDialog()
     .onDefault(function (session) {
 				
 			session.send(msgs[Math.floor(Math.random() * msgs.length)] + ' ' + session.message.user.name + '! Ganito dapat: ' + (session.message.address.conversation.isGroup ? '@' + session.message.address.bot.name : '') + ' ririks *artist* ~ *title*');
-			session.send('Pwede rin ganito: rarawan *kahit ano*');
+			session.send('Pwede rin ganito: rarawan *kahit anong nais mo*');
 			
 		})
 );
