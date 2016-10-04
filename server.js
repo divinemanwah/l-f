@@ -108,6 +108,12 @@ var errs = [
 		'Wala bes'
 	];
 	
+var suffix = [
+		'Gaylord',
+		'a.k.a. Fvckboi',
+		'the Beki Monkey'
+	];
+	
 var lunch = [
 		'Lapit na mag lunch mga beki!',
 		'Gogora na tayo sa lunching!',
@@ -116,7 +122,27 @@ var lunch = [
 
 bot.dialog('/', new builder.IntentDialog()
     // .matches(/^add/i, '/addTask')
-    // .matches(/^change/i, '/changeTask')
+    .matches(/rarawan (.*)/i, function (session, matches) {
+		
+		var opts = {
+				url: 'https://api.cognitive.microsoft.com/bing/v5.0/images/search?' + querystring.stringify({ q: matches.matched[1].trim(), count: 3, safeSearch: 'Strict' }),
+				headers: {
+						'Ocp-Apim-Subscription-Key': 'b6777d5dd61049fab63710f6580f1be2'
+					}
+			};
+			
+		request(opts, function (error, response, body) {
+			if (!error && response.statusCode == 200) {
+			
+				var res = JSON.parse(body);
+				
+				console.log(res)
+			}
+			else
+				console.log(body)
+		});
+		
+	})
     .matches(/ririks (.*) ~ (.*)/i, function (session, matches) {
 				
 			var _artist = matches.matched[1].trim().toLowerCase().replace(/\s/g, '_'),
@@ -133,17 +159,8 @@ bot.dialog('/', new builder.IntentDialog()
 					session.send(artist + ' ~ ' + title + '\n---\n' + lyrics);
 				}
 				else
-					session.send(errs[Math.floor(Math.random() * errs.length)] + ' ' + session.message.user.name + '.');
-			})
-			
-			// xmlToJson('http://api.lololyrics.com/0.5/getLyric?artist=' + encodeURIComponent(artist) + '&track=' + encodeURIComponent(title), function (err, data) {
-				
-				// if(err)
-					// session.send('Teka, mejo error. Wait ka lang bes ' + session.message.user.name + '.');
-				// else
-					// session.send(artist + ' ~ ' + title + '\n---\n' + data.result.response + '\n' + (new Date()).toString());
-				
-			// });
+					session.send(errs[Math.floor(Math.random() * errs.length)] + ' ' + session.message.user.name + (Math.floor(Math.random() * 2) ? ' ' + suffix[Math.floor(Math.random() * suffix.length)] : '') + '.');
+			});
 		}
 	)
     .onDefault(function (session) {
