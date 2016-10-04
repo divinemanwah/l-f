@@ -67,6 +67,8 @@ function xmlToJson(url, callback) {
   });
 }
 
+const querystring = require('querystring');
+
 var restify = require('restify');
 var builder = require('botbuilder');
 var http = require('http');
