@@ -124,7 +124,7 @@ bot.dialog('/', new builder.IntentDialog()
 				artist = toTitleCase(matches.matched[1].trim()),
 				title = toTitleCase(matches.matched[2].trim());
 			
-			request('http://www.lyricsmode.com/lyrics/m/' + encodeURIComponent(_artist) + '/' + encodeURIComponent(_title) + '.html', function (error, response, body) {
+			request('http://www.lyricsmode.com/lyrics/' + _artist.substr(0, 1) + '/' + encodeURIComponent(_artist) + '/' + encodeURIComponent(_title) + '.html', function (error, response, body) {
 				if (!error && response.statusCode == 200) {
 					
 					var $ = cheerio.load(body),
