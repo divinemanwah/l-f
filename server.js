@@ -133,7 +133,7 @@ bot.dialog('/', new builder.IntentDialog()
     .matches(/rarawan (.*)/i, function (session, matches) {
 		
 		var opts = {
-				url: 'https://api.cognitive.microsoft.com/bing/v5.0/images/search?' + querystring.stringify({ q: matches.matched[1].trim(), count: 3, safeSearch: 'Strict' }),
+				url: 'https://api.cognitive.microsoft.com/bing/v5.0/images/search?' + querystring.stringify({ q: matches.matched[1].trim(), count: 5, safeSearch: 'Strict' }),
 				headers: {
 						'Ocp-Apim-Subscription-Key': 'b6777d5dd61049fab63710f6580f1be2'
 					}
