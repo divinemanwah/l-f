@@ -119,14 +119,16 @@ bot.dialog('/', new builder.IntentDialog()
     // .matches(/^change/i, '/changeTask')
     .matches(/ririks (.*) ~ (.*)/i, function (session, matches) {
 				
-			var artist = toTitleCase(matches.matched[1].trim()),
+			var _artist = matches.matched[1].trim().toLowerCase().replace(/\s/g, '_'),
+				_title = matches.matched[2].trim().toLowerCase().replace(/\s/g, '_'),
+				artist = toTitleCase(matches.matched[1].trim()),
 				title = toTitleCase(matches.matched[2].trim());
 			
-			request('http://www.lyricsmode.com/lyrics/m/mayonnaise/bakit_part_2.html', function (error, response, body) {
+			request('http://www.lyricsmode.com/lyrics/m/' + encodeURIComponent(_artist) + '/' + encodeURIComponent(_title) + '.html', function (error, response, body) {
 				if (!error && response.statusCode == 200) {
 					
 					var $ = cheerio.load(body),
-						lyrics = $('#lyrics_text').text();
+						lyrics = $('#lyrics_text').text().replace(/<br\s*[\/]?>/gi, "\n");
 					
 					session.send(artist + ' ~ ' + title + '\n---\n' + lyrics);
 				}
