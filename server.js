@@ -239,7 +239,10 @@ bot.dialog('/', new builder.IntentDialog()
 						songs[$(this).text()] = artist;
 					});
 
-					if(Object.keys(songs).length)
+					if(Object.keys(songs).length) {
+					
+						session.songs = songs;
+					
 						builder.Prompts.choice(session, artist + '\n---\n' + 'Alin dito ' + session.message.user.name + '?', songs, {
 							retryPrompt: [
 									'Sure ka jan ' + session.message.user.name + '? Wala yan sa choices.',
@@ -247,6 +250,7 @@ bot.dialog('/', new builder.IntentDialog()
 								],
 							maxRetries: 2
 						});
+					}
 					else
 						next();
 				}
@@ -258,7 +262,7 @@ bot.dialog('/', new builder.IntentDialog()
 			
 			if(results.response) {
 				
-				console.log(results)
+				console.log(session)
 				
 			}
 			else
