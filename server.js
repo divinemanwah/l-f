@@ -239,7 +239,7 @@ bot.dialog('/', new builder.IntentDialog()
 						songs[$(this).text()] = artist;
 					});
 
-					if(songs.length)
+					if(Object.keys(songs).length)
 						builder.Prompts.choice(session, artist + '\n---\n' + 'Alin dito ' + session.message.user.name + '?', songs, {
 							retryPrompt: [
 									'Sure ka jan ' + session.message.user.name + '? Wala yan sa choices.',
