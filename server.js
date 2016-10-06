@@ -260,7 +260,7 @@ bot.dialog('/', new builder.IntentDialog()
 		},
 		function (session, results) {
 			
-			if(results.response && !session.message.text.startsWith('ririks2 ')) {
+			if(results.response) {
 				
 				console.log(session)
 				
