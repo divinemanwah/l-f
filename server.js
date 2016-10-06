@@ -129,6 +129,12 @@ var lunch = [
 		'Gogora na tayo sa lunching!',
 		'10 minutes nalang mga beshties, kaya pa yan!'
 	];
+	
+var imbyerns = [
+		'Hanap ka kausap mo',
+		'Ewan ko sayo',
+		'Ay ewan'
+	];
 
 bot.dialog('/', new builder.IntentDialog()
     // .matches(/^add/i, '/addTask')
@@ -227,11 +233,18 @@ bot.dialog('/', new builder.IntentDialog()
 				if (!error && response.statusCode == 200) {
 					
 					var $ = cheerio.load(body),
-						songs = $('.ui-song-block').map(function () { return $(this).text(); }).get();
+						songs = {};
+					
+					$('.ui-song-block.text_box').map(function () {
+						songs[$(this).text()] = artist;
+					});
 					
 					if(songs.length)
 						builder.Prompts.choice(session, artist + '\n---\n' + 'Alin dito ' + session.message.user.name + '?', songs, {
-							retryPrompt: 'Sure ka jan ' + session.message.user.name + '?',
+							retryPrompt: [
+									'Sure ka jan ' + session.message.user.name + '? Wala yan sa choices.',
+									'Bruha! Check mo ulit mga pagpipilian ' + session.message.user.name + '.'
+								],
 							maxRetries: 2
 						});
 					else
@@ -242,30 +255,18 @@ bot.dialog('/', new builder.IntentDialog()
 			});
 		},
 		function (session, results) {
-			console.log(results);
-			session.send(results.response.entity);
+			
+			if(results.response) {
+				
+				console.log(results)
+				
+			}
+			else
+				session.send(imbyerns[Math.floor(Math.random() * imbyerns.length)] + ' ' + session.message.user.name + '!');
 			
 			
 		}
 	])
-	// .matches(/ririks (.*)/i, function (session, matches) {
-	
-		// var _artist = matches.matched[1].trim().toLowerCase().replace(/\s/g, '_'),
-			// artist = toTitleCase(matches.matched[1].trim());
-		
-		// request('http://www.lyricsmode.com/lyrics/' + _artist.substr(0, 1) + '/' + encodeURIComponent(_artist) + '/', function (error, response, body) {
-			// if (!error && response.statusCode == 200) {
-				
-				// var $ = cheerio.load(body),
-					// songs = $('.ui-song-block').map(function () { return $(this).text(); });
-				
-				// builder.Prompts.choice(session, 'Alin dito ' + session.message.user.name + '?', songs);
-			// }
-			// else
-				// session.send(errs[Math.floor(Math.random() * errs.length)] + ' ' + session.message.user.name + (Math.floor(Math.random() * 2) ? ' ' + suffix[Math.floor(Math.random() * suffix.length)] : '') + '.');
-		// });
-		
-	// })
     .onDefault(function (session) {
 				
 			session.send(msgs[Math.floor(Math.random() * msgs.length)] + ' ' + session.message.user.name + '! Ganito dapat: ' + (session.message.address.conversation.isGroup ? '@' + session.message.address.bot.name : '') + ' ririks *artist* ~ *title* OR ririks *artist*');
