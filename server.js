@@ -198,39 +198,51 @@ bot.dialog('/', new builder.IntentDialog()
 		});
 		
 	})
-	.matches(/ririks2 (.*) ~ (.*)/i, function (session, matches) {
-		
-		session.send('b - ' + JSON.stringify(matches));
-		
-	})
-	.matches(/ririks2 (.*)/i, function (session, matches) {
-		
-		session.send('a - ' + JSON.stringify(matches));
-		
-	})
     .matches(/ririks (.*) ~ (.*)/i, function (session, matches) {
 				
-			var _artist = matches.matched[1].trim().toLowerCase().replace(/\s/g, '_'),
-				_title = matches.matched[2].trim().toLowerCase().replace(/\s/g, '_'),
-				artist = toTitleCase(matches.matched[1].trim()),
-				title = toTitleCase(matches.matched[2].trim());
-			
-			request('http://www.lyricsmode.com/lyrics/' + _artist.substr(0, 1) + '/' + encodeURIComponent(_artist) + '/' + encodeURIComponent(_title) + '.html', function (error, response, body) {
-				if (!error && response.statusCode == 200) {
-					
-					var $ = cheerio.load(body),
-						lyrics = $('<p>' + $('#lyrics_text').html().replace(/<br\s*[\/]?>/gi, "\n") + '</p>').text();
-					
-					session.send(artist + ' ~ ' + title + '\n---\n' + lyrics);
-				}
-				else
-					session.send(errs[Math.floor(Math.random() * errs.length)] + ' ' + session.message.user.name + (Math.floor(Math.random() * 2) ? ' ' + suffix[Math.floor(Math.random() * suffix.length)] : '') + '.');
-			});
+		var _artist = matches.matched[1].trim().toLowerCase().replace(/\s/g, '_'),
+			_title = matches.matched[2].trim().toLowerCase().replace(/\s/g, '_'),
+			artist = toTitleCase(matches.matched[1].trim()),
+			title = toTitleCase(matches.matched[2].trim());
+		
+		request('http://www.lyricsmode.com/lyrics/' + _artist.substr(0, 1) + '/' + encodeURIComponent(_artist) + '/' + encodeURIComponent(_title) + '.html', function (error, response, body) {
+			if (!error && response.statusCode == 200) {
+				
+				var $ = cheerio.load(body),
+					lyrics = $('<p>' + $('#lyrics_text').html().replace(/<br\s*[\/]?>/gi, "\n") + '</p>').text();
+				
+				session.send(artist + ' ~ ' + title + '\n---\n' + lyrics);
+			}
+			else
+				session.send(errs[Math.floor(Math.random() * errs.length)] + ' ' + session.message.user.name + (Math.floor(Math.random() * 2) ? ' ' + suffix[Math.floor(Math.random() * suffix.length)] : '') + '.');
+		});
+	})
+	.matches(/ririks2 (.*)/i, [
+		function () {
+			console.log(arguments)
 		}
-	)
+	])
+	// .matches(/ririks (.*)/i, function (session, matches) {
+	
+		// var _artist = matches.matched[1].trim().toLowerCase().replace(/\s/g, '_'),
+			// artist = toTitleCase(matches.matched[1].trim());
+		
+		// request('http://www.lyricsmode.com/lyrics/' + _artist.substr(0, 1) + '/' + encodeURIComponent(_artist) + '/', function (error, response, body) {
+			// if (!error && response.statusCode == 200) {
+				
+				// var $ = cheerio.load(body),
+					// songs = $('.ui-song-block').map(function () { return $(this).text(); });
+				
+				// builder.Prompts.choice(session, 'Alin dito ' + session.message.user.name + '?', songs);
+			// }
+			// else
+				// session.send(errs[Math.floor(Math.random() * errs.length)] + ' ' + session.message.user.name + (Math.floor(Math.random() * 2) ? ' ' + suffix[Math.floor(Math.random() * suffix.length)] : '') + '.');
+		// });
+		
+	// })
     .onDefault(function (session) {
 				
-			session.send(msgs[Math.floor(Math.random() * msgs.length)] + ' ' + session.message.user.name + '! Ganito dapat: ' + (session.message.address.conversation.isGroup ? '@' + session.message.address.bot.name : '') + ' ririks *artist* ~ *title*');
+			session.send(msgs[Math.floor(Math.random() * msgs.length)] + ' ' + session.message.user.name + '! Ganito dapat: ' + (session.message.address.conversation.isGroup ? '@' + session.message.address.bot.name : '') + ' ririks *artist* ~ *title* OR ririks *artist*');
 			session.send('Pwede rin ganito: rarawan *kahit anong nais mo*');
 			
 		})
