@@ -217,13 +217,32 @@ bot.dialog('/', new builder.IntentDialog()
 				session.send(errs[Math.floor(Math.random() * errs.length)] + ' ' + session.message.user.name + (Math.floor(Math.random() * 2) ? ' ' + suffix[Math.floor(Math.random() * suffix.length)] : '') + '.');
 		});
 	})
-	.matches(/ririks2 (.*)/i, [
+	.matches(/ririks (.*)/i, [
 		function (session, matches, next) {
-			builder.Prompts.choice(session, 'Alin dito ' + session.message.user.name + '?', ['asd', 'zxc', '123 qwe']);
+			
+			var _artist = matches.matched[1].trim().toLowerCase().replace(/\s/g, '_'),
+				artist = toTitleCase(matches.matched[1].trim());
+			
+			request('http://www.lyricsmode.com/lyrics/' + _artist.substr(0, 1) + '/' + encodeURIComponent(_artist) + '/', function (error, response, body) {
+				if (!error && response.statusCode == 200) {
+					
+					var $ = cheerio.load(body),
+						songs = $('.ui-song-block').map(function () { return $(this).text(); }).get();
+					
+					if(songs.length)
+						builder.Prompts.choice(session, artist + '\n---\n' + 'Alin dito ' + session.message.user.name + '?', songs, { retryPrompt: 'Sure ka jan ' + session.message.user.name + '?' });
+					else
+						next();
+				}
+				else
+					session.send(errs[Math.floor(Math.random() * errs.length)] + ' ' + session.message.user.name + (Math.floor(Math.random() * 2) ? ' ' + suffix[Math.floor(Math.random() * suffix.length)] : '') + '.');
+			});
 		},
 		function (session, results) {
-			console.log(results)
+			console.log(results);
 			session.send(results.response.entity);
+			
+			
 		}
 	])
 	// .matches(/ririks (.*)/i, function (session, matches) {
