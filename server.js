@@ -236,8 +236,8 @@ bot.dialog('/', new builder.IntentDialog()
 						songs = $('.ui-song-block .text_box').map(function () { return $(this).text(); }).get();
 
 					if(songs.length) {
-					
-						session.userData.artist = artist;
+
+						session.dialogData.artist = artist;
 					
 						builder.Prompts.choice(session, artist + '\n---\n' + 'Alin dito ' + session.message.user.name + '?', songs, {
 							retryPrompt: [
@@ -255,16 +255,20 @@ bot.dialog('/', new builder.IntentDialog()
 			});
 		},
 		function (session, results) {
+		
+			var inputstring = session.dialogData['BotBuilder.Data.Intent'],
+				flags = inputstring.replace(/.*\/([gimy]*)$/, '$1'),
+				pattern = inputstring.replace(new RegExp('^/(.*?)/'+flags+'$'), '$1'),
+				regex = new RegExp(pattern, flags);
 			
-			if(results.response) {
+			if(results.response && !regex.test(session.message.text)) {
 				
+				// session.endDialog();
 				console.log(session, results)
 				
 			}
 			else
-				session.send(imbyerns[Math.floor(Math.random() * imbyerns.length)] + ' ' + session.message.user.name + '!');
-			
-			session.endDialog();
+				session.endDialog(imbyerns[Math.floor(Math.random() * imbyerns.length)] + ' ' + session.message.user.name + '!');
 		}
 	])
     .onDefault(function (session) {
