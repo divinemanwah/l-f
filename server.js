@@ -233,11 +233,14 @@ bot.dialog('/', new builder.IntentDialog()
 				if (!error && response.statusCode == 200) {
 					
 					var $ = cheerio.load(body),
-						songs = $('.ui-song-block .text_box').map(function () { return $(this).text(); }).get();
+						_songs = {},
+						songs = $('.ui-song-block .text_box').map(function () { return _songs[$(this).text()] = $('a', this).attr('href'); }).get();
 
 					if(songs.length) {
 
+						session.dialogData._artist = _artist;
 						session.dialogData.artist = artist;
+						session.dialogData.songs = songs;
 					
 						builder.Prompts.choice(session, artist + '\n---\n' + 'Alin dito ' + session.message.user.name + '?', songs, {
 							retryPrompt: [
@@ -259,16 +262,28 @@ bot.dialog('/', new builder.IntentDialog()
 			var inputstring = session.dialogData['BotBuilder.Data.Intent'],
 				flags = inputstring.replace(/.*\/([gimy]*)$/, '$1'),
 				pattern = inputstring.replace(new RegExp('^/(.*?)/'+flags+'$'), '$1'),
-				regex = new RegExp(pattern, flags);
+				regex = new RegExp(pattern, flags),
+				_test = regex.test(session.message.text);
 			
-			if(results.response && !regex.test(session.message.text)) {
+			if(results.response && !_test) {
 				
-				// session.endDialog();
-				console.log(session, results)
+				var title = toTitleCase(results.response.entity.trim());
+		
+				request('http://www.lyricsmode.com/lyrics/' + session.dialogData.songs[results.response.entity], function (error, response, body) {
+					if (!error && response.statusCode == 200) {
+						
+						var $ = cheerio.load(body),
+							lyrics = $('<p>' + $('#lyrics_text').html().replace(/<br\s*[\/]?>/gi, "\n") + '</p>').text();
+						
+						session.send(artist + ' ~ ' + title + '\n---\n' + lyrics);
+					}
+					else
+						session.send(errs[Math.floor(Math.random() * errs.length)] + ' ' + session.message.user.name + (Math.floor(Math.random() * 2) ? ' ' + suffix[Math.floor(Math.random() * suffix.length)] : '') + '.');
+				});
 				
 			}
 			else
-				session.endDialog(imbyerns[Math.floor(Math.random() * imbyerns.length)] + ' ' + session.message.user.name + '!');
+				session.send(_test ? 'Paiba-iba ka ng gustong gawin. Ulitin mo nalang!' : imbyerns[Math.floor(Math.random() * imbyerns.length)] + ' ' + session.message.user.name + '!');
 		}
 	])
     .onDefault(function (session) {
