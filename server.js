@@ -198,14 +198,14 @@ bot.dialog('/', new builder.IntentDialog()
 		});
 		
 	})
-	.matches(/ririks2 (.*)/i, function (session, matches) {
-		
-		session.send('a - ' + JSON.stringify(matches));
-		
-	})
 	.matches(/ririks2 (.*) ~ (.*)/i, function (session, matches) {
 		
 		session.send('b - ' + JSON.stringify(matches));
+		
+	})
+	.matches(/ririks2 (.*)/i, function (session, matches) {
+		
+		session.send('a - ' + JSON.stringify(matches));
 		
 	})
     .matches(/ririks (.*) ~ (.*)/i, function (session, matches) {
