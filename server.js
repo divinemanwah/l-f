@@ -223,7 +223,7 @@ bot.dialog('/', new builder.IntentDialog()
 				session.send(errs[Math.floor(Math.random() * errs.length)] + ' ' + session.message.user.name + (Math.floor(Math.random() * 2) ? ' ' + suffix[Math.floor(Math.random() * suffix.length)] : '') + '.');
 		});
 	})
-	.matches(/ririks2 (.*)/i, [
+	.matches(/ririks (.*)/i, [
 		function (session, matches, next) {
 			
 			var _artist = matches.matched[1].trim().toLowerCase().replace(/\s/g, '_'),
@@ -234,7 +234,13 @@ bot.dialog('/', new builder.IntentDialog()
 					
 					var $ = cheerio.load(body),
 						_songs = {},
-						songs = $('.ui-song-block .text_box').map(function () { return _songs[$(this).text()] = $('a', this).attr('href'); }).get();
+						songs = $('.ui-song-block .text_box').map(function () {
+							
+									_songs[$(this).text()] = $('a', this).attr('href');
+									
+									return $(this).text();
+									
+								}).get();
 
 					if(songs.length) {
 
