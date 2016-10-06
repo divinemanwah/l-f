@@ -233,15 +233,11 @@ bot.dialog('/', new builder.IntentDialog()
 				if (!error && response.statusCode == 200) {
 					
 					var $ = cheerio.load(body),
-						songs = {};
-					
-					$('.ui-song-block .text_box').map(function () {
-						songs[$(this).text()] = artist;
-					});
+						songs = $('.ui-song-block .text_box').map(function () { return $(this).text(); }).get();
 
-					if(Object.keys(songs).length) {
+					if(songs.length) {
 					
-						session.userData.songs = songs;
+						session.userData.artist = artist;
 					
 						builder.Prompts.choice(session, artist + '\n---\n' + 'Alin dito ' + session.message.user.name + '?', songs, {
 							retryPrompt: [
@@ -262,7 +258,7 @@ bot.dialog('/', new builder.IntentDialog()
 			
 			if(results.response) {
 				
-				console.log(session)
+				console.log(session, results)
 				
 			}
 			else
