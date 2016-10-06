@@ -198,6 +198,23 @@ bot.dialog('/', new builder.IntentDialog()
 		});
 		
 	})
+	.matches(/ririks2 (.*)/i, [
+		function (session, matches, next) {
+			
+			var s = matches[1].split('~', 2);
+			
+			if(s.length == 2)
+				next();
+				
+			session.send('aaa');
+			
+		},
+		function () {
+			
+			session.send(JSON.stringify(arguments));
+			
+		}
+	])
     .matches(/ririks (.*) ~ (.*)/i, function (session, matches) {
 				
 			var _artist = matches.matched[1].trim().toLowerCase().replace(/\s/g, '_'),
