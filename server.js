@@ -217,7 +217,7 @@ bot.dialog('/', new builder.IntentDialog()
 				session.send(errs[Math.floor(Math.random() * errs.length)] + ' ' + session.message.user.name + (Math.floor(Math.random() * 2) ? ' ' + suffix[Math.floor(Math.random() * suffix.length)] : '') + '.');
 		});
 	})
-	.matches(/ririks (.*)/i, [
+	.matches(/ririks2 (.*)/i, [
 		function (session, matches, next) {
 			
 			var _artist = matches.matched[1].trim().toLowerCase().replace(/\s/g, '_'),
@@ -230,7 +230,10 @@ bot.dialog('/', new builder.IntentDialog()
 						songs = $('.ui-song-block').map(function () { return $(this).text(); }).get();
 					
 					if(songs.length)
-						builder.Prompts.choice(session, artist + '\n---\n' + 'Alin dito ' + session.message.user.name + '?', songs, { retryPrompt: 'Sure ka jan ' + session.message.user.name + '?' });
+						builder.Prompts.choice(session, artist + '\n---\n' + 'Alin dito ' + session.message.user.name + '?', songs, {
+							retryPrompt: 'Sure ka jan ' + session.message.user.name + '?',
+							maxRetries: 2
+						});
 					else
 						next();
 				}
