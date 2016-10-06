@@ -238,7 +238,7 @@ bot.dialog('/', new builder.IntentDialog()
 					$('.ui-song-block.text_box').map(function () {
 						songs[$(this).text()] = artist;
 					});
-					
+					console.log('a', songs)
 					if(songs.length)
 						builder.Prompts.choice(session, artist + '\n---\n' + 'Alin dito ' + session.message.user.name + '?', songs, {
 							retryPrompt: [
