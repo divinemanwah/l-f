@@ -274,7 +274,7 @@ bot.dialog('/', new builder.IntentDialog()
 			if(results.response && !_test) {
 				
 				var title = toTitleCase(results.response.entity.trim());
-
+console.log(session.dialogData.songs)
 				request('http://www.lyricsmode.com/lyrics/' + session.dialogData.songs[results.response.entity], function (error, response, body) {
 					if (!error && response.statusCode == 200) {
 						
