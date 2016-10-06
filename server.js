@@ -241,7 +241,7 @@ bot.dialog('/', new builder.IntentDialog()
 
 					if(Object.keys(songs).length) {
 					
-						session.songs = songs;
+						session.userData.songs = songs;
 					
 						builder.Prompts.choice(session, artist + '\n---\n' + 'Alin dito ' + session.message.user.name + '?', songs, {
 							retryPrompt: [
@@ -260,7 +260,7 @@ bot.dialog('/', new builder.IntentDialog()
 		},
 		function (session, results) {
 			
-			if(results.response) {
+			if(results.response && !session.message.text.startsWith('ririks2 ')) {
 				
 				console.log(session)
 				
