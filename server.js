@@ -276,6 +276,7 @@ bot.dialog('/', new builder.IntentDialog()
 				var title = toTitleCase(results.response.entity.trim());
 
 				request('http://www.lyricsmode.com' + session.dialogData.songs[results.response.entity], function (error, response, body) {
+					console.log(arguments)
 					if (!error && response.statusCode == 200) {
 						
 						var $ = cheerio.load(body),
