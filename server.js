@@ -237,7 +237,7 @@ bot.dialog('/', new builder.IntentDialog()
 
 					if(songs.length) {
 					
-						session.conversationData.artist = artist;
+						session.userData.artist = artist;
 					
 						builder.Prompts.choice(session, artist + '\n---\n' + 'Alin dito ' + session.message.user.name + '?', songs, {
 							retryPrompt: [
