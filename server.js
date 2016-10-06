@@ -198,24 +198,16 @@ bot.dialog('/', new builder.IntentDialog()
 		});
 		
 	})
-	.matches(/ririks2 (.*)/i, [
-		function (session, matches, next) {
-			
-			// var s = matches[1].split('~', 2);
-			
-			// if(s.length == 2)
-				// next();
-				
-			// session.send('aaa');
-			session.send('a - ' + JSON.stringify(arguments));
-			
-		},
-		function () {
-			
-			session.send('b - ' + JSON.stringify(arguments));
-			
-		}
-	])
+	.matches(/ririks2 (.*)/i, function (session, matches) {
+		
+		session.send('a - ' + JSON.stringify(matches));
+		
+	})
+	.matches(/ririks2 (.*) ~ (.*)/i, function (session, matches) {
+		
+		session.send('b - ' + JSON.stringify(matches));
+		
+	})
     .matches(/ririks (.*) ~ (.*)/i, function (session, matches) {
 				
 			var _artist = matches.matched[1].trim().toLowerCase().replace(/\s/g, '_'),
