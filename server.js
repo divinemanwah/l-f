@@ -201,17 +201,18 @@ bot.dialog('/', new builder.IntentDialog()
 	.matches(/ririks2 (.*)/i, [
 		function (session, matches, next) {
 			
-			var s = matches[1].split('~', 2);
+			// var s = matches[1].split('~', 2);
 			
-			if(s.length == 2)
-				next();
+			// if(s.length == 2)
+				// next();
 				
-			session.send('aaa');
+			// session.send('aaa');
+			session.send('a - ' + JSON.stringify(arguments));
 			
 		},
 		function () {
 			
-			session.send(JSON.stringify(arguments));
+			session.send('b - ' + JSON.stringify(arguments));
 			
 		}
 	])
