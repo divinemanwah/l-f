@@ -218,8 +218,12 @@ bot.dialog('/', new builder.IntentDialog()
 		});
 	})
 	.matches(/ririks2 (.*)/i, [
-		function () {
-			console.log(arguments)
+		function (session, matches, next) {
+			builder.Prompts.choice(session, 'Alin dito ' + session.message.user.name + '?', ['asd', 'zxc', '123 qwe']);
+		},
+		function (session, results) {
+			console.log(results)
+			session.send(results.response.entity);
 		}
 	])
 	// .matches(/ririks (.*)/i, function (session, matches) {
