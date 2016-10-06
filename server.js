@@ -264,7 +264,7 @@ bot.dialog('/', new builder.IntentDialog()
 			else
 				session.send(imbyerns[Math.floor(Math.random() * imbyerns.length)] + ' ' + session.message.user.name + '!');
 			
-			session.cancelDialog();
+			session.endConversation();
 		}
 	])
     .onDefault(function (session) {
