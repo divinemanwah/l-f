@@ -281,15 +281,15 @@ bot.dialog('/', new builder.IntentDialog()
 						var $ = cheerio.load(body),
 							lyrics = $('<p>' + $('#lyrics_text').html().replace(/<br\s*[\/]?>/gi, "\n") + '</p>').text();
 						console.log(lyrics)
-						session.send(artist + ' ~ ' + title + '\n---\n' + lyrics);
+						session.endDialog(artist + ' ~ ' + title + '\n---\n' + lyrics);
 					}
 					else
-						session.send(errs[Math.floor(Math.random() * errs.length)] + ' ' + session.message.user.name + (Math.floor(Math.random() * 2) ? ' ' + suffix[Math.floor(Math.random() * suffix.length)] : '') + '.');
+						session.endDialog(errs[Math.floor(Math.random() * errs.length)] + ' ' + session.message.user.name + (Math.floor(Math.random() * 2) ? ' ' + suffix[Math.floor(Math.random() * suffix.length)] : '') + '.');
 				});
 				
 			}
 			else
-				session.send(_test ? 'Paiba-iba ka ng gustong gawin. Ulitin mo nalang!' : imbyerns[Math.floor(Math.random() * imbyerns.length)] + ' ' + session.message.user.name + '!');
+				session.endDialog(_test ? 'Paiba-iba ka ng gustong gawin. Ulitin mo nalang!' : imbyerns[Math.floor(Math.random() * imbyerns.length)] + ' ' + session.message.user.name + '!');
 		}
 	])
     .onDefault(function (session) {
