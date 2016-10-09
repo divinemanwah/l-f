@@ -206,8 +206,8 @@ bot.dialog('/', new builder.IntentDialog()
 	})
     .matches(/ririks (.*) ~ (.*)/i, function (session, matches) {
 				
-		var _artist = matches.matched[1].trim().toLowerCase().replace(/\s/g, '_'),
-			_title = matches.matched[2].trim().toLowerCase().replace(/\s/g, '_'),
+		var _artist = matches.matched[1].trim().toLowerCase().replace(/\s/g, '_').replace(/[^a-z0-9]/g, ''),
+			_title = matches.matched[2].trim().toLowerCase().replace(/\s/g, '_').replace(/[^a-z0-9]/g, ''),
 			artist = toTitleCase(matches.matched[1].trim()),
 			title = toTitleCase(matches.matched[2].trim());
 		
@@ -226,7 +226,7 @@ bot.dialog('/', new builder.IntentDialog()
 	.matches(/ririks (.*)/i, [
 		function (session, matches, next) {
 			
-			var _artist = matches.matched[1].trim().toLowerCase().replace(/\s/g, '_'),
+			var _artist = matches.matched[1].trim().toLowerCase().replace(/\s/g, '_').replace(/[^a-z0-9]/g, ''),
 				artist = toTitleCase(matches.matched[1].trim());
 			
 			request('http://www.lyricsmode.com/lyrics/' + _artist.substr(0, 1) + '/' + encodeURIComponent(_artist) + '/', function (error, response, body) {
