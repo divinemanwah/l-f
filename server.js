@@ -307,7 +307,7 @@ bot.dialog('/', new builder.IntentDialog()
 
 var lunch_interval = null;
 
-bot.on('conversationUpdate', function (message) {
+bot.on('conversationUpdate', function (message) {console.log('addr', message.address)
    // Check for group conversations
     if (message.address.conversation.isGroup) {
         // Send a hello message when bot is added
@@ -333,7 +333,7 @@ bot.on('conversationUpdate', function (message) {
         }
 
         // Send a goodbye message when bot is removed
-        if (message.membersRemoved) {console.log('addr', message.address)
+        if (message.membersRemoved) {
             message.membersRemoved.forEach(function (identity) {
                 if (identity.id === message.address.bot.id) {
                     var reply = new builder.Message()
