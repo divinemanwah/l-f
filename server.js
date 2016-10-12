@@ -369,7 +369,7 @@ bot.on('deleteUserData', function (message) {
 });
 
 bot.on('receive', function (message) {
-    console.log('receive', message.address.user)
+    console.log('receive', message.address.conversation)
 });
 
 
