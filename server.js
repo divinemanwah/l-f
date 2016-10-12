@@ -307,7 +307,7 @@ bot.dialog('/', new builder.IntentDialog()
 
 var lunch_interval = null;
 
-bot.on('conversationUpdate', function (message) {console.log('addr', message.address)
+bot.on('conversationUpdate', function (message) {
    // Check for group conversations
     if (message.address.conversation.isGroup) {
         // Send a hello message when bot is added
@@ -366,6 +366,10 @@ bot.on('contactRelationUpdate', function (message) {
 
 bot.on('deleteUserData', function (message) {
     // User asked to delete their data
+});
+
+bot.on('receive', function () {
+    console.log('receive', arguments)
 });
 
 
