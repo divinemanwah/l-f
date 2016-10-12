@@ -362,13 +362,13 @@ bot.on('deleteUserData', function (message) {
     // console.log('receive', message.address.conversation)
 // });
 
-var s = schedule.scheduleJob({hour: 16, minute: 52}, function(){
+var s = schedule.scheduleJob({hour: 16, minute: 53}, function(){
 					
 		var reply = new builder.Message()
 						.address({
 							channelId: 'skype',
 							bot: {
-									id: bot.id
+									id: 'bekibot'
 								},
 							user: {
 									id: '29:1GeGk4Kk4MXszQwfhL222i9ltcQf3s7oyqrWmIUwxtpw',
