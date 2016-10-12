@@ -368,8 +368,8 @@ bot.on('deleteUserData', function (message) {
     // User asked to delete their data
 });
 
-bot.on('receive', function () {
-    console.log('receive', arguments)
+bot.on('receive', function (message) {
+    console.log('receive', message.address.user)
 });
 
 
