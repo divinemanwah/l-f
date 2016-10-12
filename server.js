@@ -318,16 +318,6 @@ bot.on('conversationUpdate', function (message) {
                             .address(message.address)
                             .text("Hello everyone!");
                     bot.send(reply);
-					
-					var s = schedule.scheduleJob({hour: 12, minute: 50}, function(){
-					
-							var reply = new builder.Message()
-											.address(message.address)
-											.text(lunch[Math.floor(Math.random() * lunch.length)]);
-							
-							bot.send(reply);
-							
-						});
                 }
             });
         }
@@ -368,9 +358,23 @@ bot.on('deleteUserData', function (message) {
     // User asked to delete their data
 });
 
-bot.on('receive', function (message) {
-    console.log('receive', message.address.conversation)
-});
+// bot.on('receive', function (message) {
+    // console.log('receive', message.address.conversation)
+// });
+console.log(bot)
+
+// var s = schedule.scheduleJob({hour: 12, minute: 50}, function(){
+					
+		// var reply = new builder.Message()
+						// .address({
+							// channelId: 'skype',
+							// bot: [Object],
+							// useAuth: true })
+						// .text(lunch[Math.floor(Math.random() * lunch.length)]);
+		
+		// bot.send(reply);
+		
+	// });
 
 
 //=========================================================
