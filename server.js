@@ -145,9 +145,19 @@ bot.dialog('/', new builder.IntentDialog()
 				headers: {
 						'Ocp-Apim-Subscription-Key': 'b6777d5dd61049fab63710f6580f1be2'
 					}
-			};
-			
+			},
+			typing = setInterval(function () {
+					
+					session.sendTyping();
+					
+				}, 2000);
+		
+		session.sendTyping();
+		
 		request(opts, function (error, response, body) {
+		
+			clearInterval(typing);
+		
 			if (!error && response.statusCode == 200) {
 			
 				var res = JSON.parse(body);
@@ -209,9 +219,19 @@ bot.dialog('/', new builder.IntentDialog()
 		var _artist = matches.matched[1].trim().toLowerCase().replace(/\s/g, '_').replace(/[^a-z0-9_]/g, ''),
 			_title = matches.matched[2].trim().toLowerCase().replace(/\s/g, '_').replace(/[^a-z0-9_]/g, ''),
 			artist = toTitleCase(matches.matched[1].trim()),
-			title = toTitleCase(matches.matched[2].trim());
+			title = toTitleCase(matches.matched[2].trim()),
+			typing = setInterval(function () {
+					
+					session.sendTyping();
+					
+				}, 2000);
+		
+		session.sendTyping();
 		
 		request('http://www.lyricsmode.com/lyrics/' + _artist.substr(0, 1) + '/' + encodeURIComponent(_artist) + '/' + encodeURIComponent(_title) + '.html', function (error, response, body) {
+		
+			clearInterval(typing);
+		
 			if (!error && response.statusCode == 200) {
 				
 				var $ = cheerio.load(body),
@@ -227,9 +247,19 @@ bot.dialog('/', new builder.IntentDialog()
 		function (session, matches, next) {
 			
 			var _artist = matches.matched[1].trim().toLowerCase().replace(/\s/g, '_').replace(/[^a-z0-9_]/g, ''),
-				artist = toTitleCase(matches.matched[1].trim());
+				artist = toTitleCase(matches.matched[1].trim()),
+				typing = setInterval(function () {
+						
+						session.sendTyping();
+						
+					}, 2000);
+			
+			session.sendTyping();
 			
 			request('http://www.lyricsmode.com/lyrics/' + _artist.substr(0, 1) + '/' + encodeURIComponent(_artist) + '/', function (error, response, body) {
+			
+				clearInterval(typing);
+			
 				if (!error && response.statusCode == 200) {
 					
 					var $ = cheerio.load(body),
@@ -273,9 +303,19 @@ bot.dialog('/', new builder.IntentDialog()
 			
 			if(results.response && !_test) {
 				
-				var title = toTitleCase(results.response.entity.trim());
+				var title = toTitleCase(results.response.entity.trim()),
+					typing = setInterval(function () {
+							
+							session.sendTyping();
+							
+						}, 2000);
+				
+				session.sendTyping();
 
 				request('http://www.lyricsmode.com' + session.dialogData.songs[results.response.entity], function (error, response, body) {
+				
+					clearInterval(typing);
+				
 					if (!error && response.statusCode == 200) {
 						
 						var $ = cheerio.load(body),
