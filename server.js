@@ -362,7 +362,7 @@ bot.on('deleteUserData', function (message) {
     // console.log('receive', message.address.conversation)
 // });
 
-var s = schedule.scheduleJob({hour: 16, minute: 53}, function(){
+var s = schedule.scheduleJob({hour: 16, minute: 54}, function(){
 					
 		var reply = new builder.Message()
 						.address({
