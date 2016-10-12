@@ -361,20 +361,29 @@ bot.on('deleteUserData', function (message) {
 // bot.on('receive', function (message) {
     // console.log('receive', message.address.conversation)
 // });
-console.log(bot)
 
-// var s = schedule.scheduleJob({hour: 12, minute: 50}, function(){
+var s = schedule.scheduleJob({hour: 16, minute: 52}, function(){
 					
-		// var reply = new builder.Message()
-						// .address({
-							// channelId: 'skype',
-							// bot: [Object],
-							// useAuth: true })
-						// .text(lunch[Math.floor(Math.random() * lunch.length)]);
+		var reply = new builder.Message()
+						.address({
+							channelId: 'skype',
+							bot: {
+									id: bot.id
+								},
+							user: {
+									id: '29:1GeGk4Kk4MXszQwfhL222i9ltcQf3s7oyqrWmIUwxtpw',
+									name: 'Ron'
+								},
+							conversation: {
+									isGroup: true,
+									id: '19:9f964a1ab85145ba91d66b515e8abd80@thread.skype'
+								}
+						})
+						.text(lunch[Math.floor(Math.random() * lunch.length)]);
 		
-		// bot.send(reply);
+		bot.send(reply);
 		
-	// });
+	});
 
 
 //=========================================================
